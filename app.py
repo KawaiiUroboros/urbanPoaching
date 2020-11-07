@@ -2,9 +2,10 @@ import imghdr
 import os
 from random import random
 
+from PIL import Image
 from flask_cors import CORS, cross_origin
 from flask import Flask, render_template, request, redirect, url_for, abort, \
-    send_from_directory, Response
+    send_from_directory, Response, jsonify
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -38,15 +39,19 @@ def index():
 @app.route('/', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def upload_files():
-    uploaded_file = request.files['file']
-    filename = secure_filename(uploaded_file.filename)
-    if filename != '':
-        file_ext = os.path.splitext(filename)[1]
-        if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
-                file_ext != validate_image(uploaded_file.stream):
-            return "Invalid image", 400
-        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-    return int(random()*100)
+    # uploaded_file = request.files['file']
+    # filename = secure_filename(uploaded_file.filename)
+    # if filename != '':
+    #     file_ext = os.path.splitext(filename)[1]
+    #     if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
+    #             file_ext != validate_image(uploaded_file.stream):
+    #         return "Invalid image", 400
+    #     uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+    file = request.files['image']
+    # Read the image via file.stream
+    img = Image.open(file.stream)
+    return jsonify({'msg': 'success', 'size': [img.width, img.height],'possibility': '{:.2f}'.format(random()*100)})
+
 
 
 @app.route('/uploads/<filename>')
