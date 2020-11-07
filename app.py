@@ -36,9 +36,6 @@ def index():
 @app.route('/', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def upload_files():
-    resp = Response("Foo bar baz")
-    resp.headers['Access-Control-Allow-Origin'] = '*'
-    return resp
     uploaded_file = request.files['file']
     filename = secure_filename(uploaded_file.filename)
     if filename != '':
@@ -48,7 +45,6 @@ def upload_files():
             return "Invalid image", 400
         uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
     resp = Response("Foo bar baz")
-    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 
