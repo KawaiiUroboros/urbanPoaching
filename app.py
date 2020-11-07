@@ -1,10 +1,13 @@
 import imghdr
 import os
+from flask_cors import CORS
 from flask import Flask, render_template, request, redirect, url_for, abort, \
     send_from_directory, Response
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif']
 app.config['UPLOAD_PATH'] = 'uploads'
