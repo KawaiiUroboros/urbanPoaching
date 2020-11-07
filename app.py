@@ -1,6 +1,6 @@
 import imghdr
 import os
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask import Flask, render_template, request, redirect, url_for, abort, \
     send_from_directory, Response
 from werkzeug.utils import secure_filename
@@ -33,7 +33,8 @@ def index():
     return render_template('index.html', files=files)
 
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def upload_files():
     resp = Response("Foo bar baz")
     resp.headers['Access-Control-Allow-Origin'] = '*'
