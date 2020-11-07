@@ -1,7 +1,7 @@
 import imghdr
 import os
 from flask import Flask, render_template, request, redirect, url_for, abort, \
-    send_from_directory
+    send_from_directory, Response
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -40,7 +40,9 @@ def upload_files():
                 file_ext != validate_image(uploaded_file.stream):
             return "Invalid image", 400
         uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-    return '', 204
+    resp = Response("Foo bar baz")
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 
 @app.route('/uploads/<filename>')
