@@ -1,5 +1,7 @@
 import imghdr
 import os
+from random import random
+
 from flask_cors import CORS, cross_origin
 from flask import Flask, render_template, request, redirect, url_for, abort, \
     send_from_directory, Response
@@ -44,8 +46,7 @@ def upload_files():
                 file_ext != validate_image(uploaded_file.stream):
             return "Invalid image", 400
         uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-    resp = Response("Foo bar baz")
-    return resp
+    return int(random()*100)
 
 
 @app.route('/uploads/<filename>')
