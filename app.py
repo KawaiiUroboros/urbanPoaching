@@ -6,7 +6,12 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 
-@app.route("/im_size", methods=["POST"])
+@app.route("/", methods=["GET"])
+def index():
+    return "Hello, i'm Chloe!"
+
+
+@app.route("/upload", methods=["POST"])
 def process_image():
     file = request.files['image']
     # Read the image via file.stream
