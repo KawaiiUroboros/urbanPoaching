@@ -16,8 +16,11 @@ def process_image():
     file = request.files['image']
     # Read the image via file.stream
     img = Image.open(file.stream)
+    response =jsonify({'msg': 'success', 'possibility': ['{:.2f}'.format(random())]})
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    return response
 
-    return jsonify({'msg': 'success', 'possibility': ['{:.2f}'.format(random())]})
 
 
 if __name__ == '__main__':
