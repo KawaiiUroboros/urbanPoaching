@@ -1,6 +1,8 @@
 import imghdr
 import os
+from soundReco import printmew
 from random import random
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 from PIL import Image
 from flask_cors import CORS, cross_origin
@@ -39,14 +41,6 @@ def index():
 @app.route('/', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def upload_files():
-    # uploaded_file = request.files['file']
-    # filename = secure_filename(uploaded_file.filename)
-    # if filename != '':
-    #     file_ext = os.path.splitext(filename)[1]
-    #     if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
-    #             file_ext != validate_image(uploaded_file.stream):
-    #         return "Invalid image", 400
-    #     uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
     file = request.files['image']
     # Read the image via file.stream
     img = Image.open(file.stream)

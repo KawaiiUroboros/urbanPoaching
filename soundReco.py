@@ -1,0 +1,2 @@
+def printmew():
+    print('mew')
